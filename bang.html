@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link href="http://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
+	<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+	<script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+	<title>COWBOY ACCIDENT</title>
+	<style>
+		div {
+			width: 1000px;
+			height: 800px;
+			background-image: url("cowboy.jpg");
+		}
+	</style>
+</head>
+
+<body>
+	<div>
+		<canvas id="canvas1" width="1000" height="800"></canvas>
+	</div>
+	<script>
+		//RequestAnimationFrame for the Browsers
+		(function () {
+			var requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
+				window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
+			window.requestAnimationFrame = requestAnimationFrame;
+		})();
+		//canvas
+		var ele = document.querySelector("#canvas1");
+		var ctx = ele.getContext('2d');
+		var ctx2 = ele.getContext('2d');
+		// x,y are the coordinates for bullet
+		var x = 150;
+		var y = 550;
+		var dx = 2;
+		// a,b are the coordinates for wall
+		var a = 800;
+		var b = 520;
+
+		// c,d are the coordinates for COWBOY
+		var c = 50;
+		var d = 520;
+		var intervalId = 0;
+		function select() {
+
+			requestAnimationFrame(draw);
+
+			if (x + dx > 800 || x + dx < 0)
+				dx = -dx;
+			x += dx;
+
+			if (x + dx == 150) {
+
+				clearInterval(intervalId);
+				requestAnimationFrame(draw2);
+				setTimeout(function () { alert('“this was a mistake!”') }, 500)
+
+			}
+
+		}
+		function select2() {
+			setInterval(select2, 10)
+			requestAnimationFrame(draw2);
+
+
+		}
+
+		//bullet
+		function draw() {
+			ctx.clearRect(0, 0, 1000, 800);
+			ctx.beginPath();
+			var draw = ctx.arc(x, y, 5, 0, 2 * Math.PI, false)
+			ctx.strokeStyle = "black";
+			ctx.stroke();
+			ctx.fillStyle = "black";
+			ctx.fill();
+
+			// wall
+			ctx.beginPath();
+			ctx.rect(800, 520, 40, 150);
+			ctx.strokeStyle = "black";
+			ctx.stroke();
+			ctx.fill();
+			// COWBOY
+			ctx.arc(55, 500, 20, 0, 2 * Math.PI, false)
+			ctx.fillStyle = "black";
+			ctx.fill();
+			ctx.beginPath();
+			ctx.rect(50, 520, 10, 150);
+			ctx.strokeStyle = "black";
+			ctx.stroke();
+			ctx.fill();
+			ctx.beginPath();
+			ctx.moveTo(50, 600);
+			ctx.lineTo(100, 550);
+			ctx.stroke();
+			//gun
+			ctx.beginPath();
+			ctx.moveTo(100, 550);
+			ctx.lineTo(150, 550);
+			ctx.stroke();
+
+
+		}
+		requestAnimationFrame(draw);
+		intervalId = setInterval(select, 1);
+
+
+		//bullet2
+		function draw2() {
+			ctx2.clearRect(0, 0, 1000, 800);
+			ctx2.beginPath();
+
+			// COWBOY2
+			ctx2.arc(250, 650, 20, 0, 2 * Math.PI, false)
+			ctx2.fillStyle = "black";
+			ctx2.fill();
+			ctx2.beginPath();
+			ctx2.rect(90, 650, 150, 10);
+			ctx2.strokeStyle = "black";
+			ctx2.stroke();
+			ctx2.fill();
+			ctx2.beginPath();
+			ctx2.moveTo(200, 650);
+			ctx2.lineTo(220, 550);
+			ctx2.stroke();
+
+		}
+		requestAnimationFrame(draw2);
+
+
+	</script>
+</body>
+
+</html>
